@@ -74,7 +74,10 @@ class RequestController extends Controller
      */
     public function edit($id)
     {
-        return view('edit');
+        $client = new Client();
+        $response = $client->request('GET', 'http://127.0.0.1:8001/api/items/'.$id);
+        $item = json_decode($response->getBody()->getContents());
+        return view('edit' , compact('item'));
     }
 
     /**
@@ -86,7 +89,20 @@ class RequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $client = new Client();
+        $response = $client->request('PUT', 'http://127.0.0.1:8001/api/items/'.$id, [
+            'form_params' => [
+                'name' => $request->name,
+                'description' => $request->description,
+            ]
+        ]);
+
+        return redirect('request')->with('success', 'Item updated successfully.');
     }
 
     /**
@@ -97,6 +113,8 @@ class RequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = new Client();
+        $response = $client->request('DELETE', 'http://127.0.0.1:8001/api/items/'.$id);
+        return redirect('request')->with('warning', 'Item deleted successfully.');
     }
 }
