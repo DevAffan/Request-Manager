@@ -29,7 +29,7 @@ class RequestController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -40,7 +40,19 @@ class RequestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $client = new Client();
+        $response = $client->request('POST', 'http://127.0.0.1:8001/api/items/', [
+            'form_params' => [
+                'name' => $request->name,
+                'description' => $request->description,
+            ]
+        ]);
+        return redirect('request')->with('success', 'Item created successfully.');
     }
 
     /**
@@ -62,7 +74,7 @@ class RequestController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('edit');
     }
 
     /**

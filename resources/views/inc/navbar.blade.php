@@ -12,9 +12,7 @@
           <li class="nav-item">
             <a class="nav-link {{Request::is('/request/create') ? 'active' : ''}}" href="/request/create">Add Item</a>
           </li>
-            <li class="nav-item">
-                <a class="nav-link {{Request::is('/request/show') ? 'active' : ''}}" href="/request/show">Show Request</a>
-            </li>
+
 
         </ul>
       </div>

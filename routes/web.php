@@ -19,4 +19,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('request' , [RequestController::class , 'index']);
+Route::resource('request' , RequestController::class);
